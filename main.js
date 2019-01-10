@@ -46,11 +46,28 @@ function makeCounter(counterId, initialValue = 0) {
   }
 function func1(e){
     totalCounter.increment();
-    console.log('this is change'+e.target.value+" total counter is: "+totalCounter.getCount());
-    let colorData={value: e.target.value, counter: makeCounter('e.target.value')};
-    //TODO: make value non configurable.
-    colorData.counter.increment();
-    colorsCounters.push(colorData);
+    let color=e.target.value;
+    console.log('this is change'+color+" total counter is: "+totalCounter.getCount());
+    let index=checkIfColorWasPickedBefore(color);
+    let sentIndex;
+    if(index==null){//Means we need to add new color Counter id
+        //to colorsCounter
+        let colorData={value: color, counter: makeCounter('color')};
+        Object.defineProperty(colorData,'value',{
+            //value: color,
+            writable:false
+        })
+        
+        //TODO: make value non configurable and non writable.Note: I think I dit it
+        colorData.counter.increment();
+        colorsCounters.push(colorData);
+        sentIndex=colorsCounters.length-1;
+    }
+    
+    else{
+        colorsCounters[index].counter.increment();
+        sentIndex=index;
+    }
     setTimeout(printBanner,5000);
 }
 function func2(e){
@@ -67,7 +84,7 @@ function checkIfColorWasPickedBefore(color){
 function printBanner(){
     document.querySelector('.invisible').classList.remove('invisible');
     let string=`You have picked a color ${totalCounter.getCount()} times!`;
-    document.getElementById("balls").innerText=string;
+    document.getElementById("total").innerText=string;
     alert('user picked this color: '+435345+' times');
 }
 
