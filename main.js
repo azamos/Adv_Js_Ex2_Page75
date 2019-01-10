@@ -86,7 +86,10 @@ function printBanner(index){
     }
     let string=`You have picked a color ${totalCounter.getCount()} times!`;
     document.getElementById("total").innerText=string;
-    let string2=`You have picked this specifid color ${colorsCounters[index].counter.getCount()} times!`;
+    let color=colorsCounters[index].value;
+    let id=color+'_'+colorsCounters[index].counter.getCount();
+    document.getElementById('this_id').innerText=`this choise's id is: ${id}`;
+    let string2=`You have picked this specific color ${colorsCounters[index].counter.getCount()} times!`;
     document.getElementById("this_color_count").innerText=string2;
     let string3=`The color you picked is ${colorsCounters[index].value}`;
     document.getElementById('this_color').innerText=string3;
