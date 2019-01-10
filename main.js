@@ -68,7 +68,7 @@ function func1(e){
         colorsCounters[index].counter.increment();
         sentIndex=index;
     }
-    setTimeout(printBanner,5000);
+    setTimeout(printBanner,5000,sentIndex);
 }
 function func2(e){
     console.log("This is input"+e.target.value);
@@ -81,10 +81,15 @@ function checkIfColorWasPickedBefore(color){
         return null;//Means we did not pick it before
     }
 }
-function printBanner(){
-    document.querySelector('.invisible').classList.remove('invisible');
+function printBanner(index){
+    let msg=document.querySelector('.invisible');
+    if(msg!=null){
+        msg.classList.remove('invisible');
+    }
     let string=`You have picked a color ${totalCounter.getCount()} times!`;
     document.getElementById("total").innerText=string;
+    let string2=`You have picked this specifid color ${colorsCounters[index].counter.getCount()}`;
+    document.getElementById("this_color_count").innerText=string2;
     alert('user picked this color: '+435345+' times');
 }
 
