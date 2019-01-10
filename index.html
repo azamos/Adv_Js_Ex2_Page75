@@ -1,4 +1,4 @@
-<DOCTYPE <!DOCTYPE html>
+<DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,7 +10,7 @@
 </head>
 <body>
     <div>
-        <input type="color" name="color_input" id="color_input"  oninput="func1(event)" ><!--onchange="func1(event)"-->
+        <input type="color" name="color_input" id="color_input"  oninput="input_event_handler(event)" >
         <label for="color_input">Pick a color</label>
     </div>
     <div class="jumbotron invisible" id="jTron">
@@ -19,7 +19,11 @@
             <hr class="my-4">
             <p id="this_color_count"></p>
             <p id="this_color"></p>
-            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="hide_yo_mama()">Hide this jumbotron</a>
+            <svg  version="1.1" baseProfile="full" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                <rect id="this_color_visual" width='50' height="50" style="stroke: black;" />
+            </svg>
+            <div id="prev_color"></div>
+            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="hide()">Hide this jumbotron</a>
           </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

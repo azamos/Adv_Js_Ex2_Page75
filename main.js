@@ -1,7 +1,7 @@
 
-const totalCounter=makeCounter("total");
-const colorsCounters=[];
-
+const totalCounter=makeCounter("total");//the total amount of colors picked
+const colorsCounters=[];//array to keep tracks of all of the colors that are picked
+//the function below was created by asaf
 function makeCounter(counterId, initialValue = 0) {
     const id = counterId;
     let counter = initialValue;
@@ -44,7 +44,7 @@ function makeCounter(counterId, initialValue = 0) {
       }
     };
   }
-function func1(e){
+function input_event_handler(e){
     totalCounter.increment();
     let color=e.target.value;
     console.log('this is change'+color+" total counter is: "+totalCounter.getCount());
@@ -71,9 +71,6 @@ function func1(e){
     if(!msg.classList.contains('invisible')){msg.classList.add('invisible');}
     setTimeout(printBanner,5000,sentIndex);
 }
-function func2(e){
-    console.log("This is input"+e.target.value);
-}
 function checkIfColorWasPickedBefore(color){
     for(let i=0;i<colorsCounters.length;i++){
         if(colorsCounters[i].value==color){
@@ -93,8 +90,9 @@ function printBanner(index){
     document.getElementById("this_color_count").innerText=string2;
     let string3=`The color you picked is ${colorsCounters[index].value}`;
     document.getElementById('this_color').innerText=string3;
+    document.getElementById('this_color_visual').style.fill = colorsCounters[index].value;
 }
-function hide_yo_mama(){
+function hide(){
     let msg=document.getElementById('jTron');
     msg.classList.add('invisible');
 }
