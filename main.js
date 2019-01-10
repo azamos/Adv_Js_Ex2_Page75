@@ -63,11 +63,12 @@ function func1(e){
         colorsCounters.push(colorData);
         sentIndex=colorsCounters.length-1;
     }
-    
     else{
         colorsCounters[index].counter.increment();
         sentIndex=index;
     }
+    let msg=document.getElementById('jTron');
+    if(!msg.classList.contains('invisible')){msg.classList.add('invisible');}
     setTimeout(printBanner,5000,sentIndex);
 }
 function func2(e){
@@ -88,8 +89,13 @@ function printBanner(index){
     }
     let string=`You have picked a color ${totalCounter.getCount()} times!`;
     document.getElementById("total").innerText=string;
-    let string2=`You have picked this specifid color ${colorsCounters[index].counter.getCount()}`;
+    let string2=`You have picked this specifid color ${colorsCounters[index].counter.getCount()} times!`;
     document.getElementById("this_color_count").innerText=string2;
-    alert('user picked this color: '+435345+' times');
+    let string3=`The color you picked is ${colorsCounters[index].value}`;
+    document.getElementById('this_color').innerText=string3;
+}
+function hide_yo_mama(){
+    let msg=document.getElementById('jTron');
+    msg.classList.add('invisible');
 }
 

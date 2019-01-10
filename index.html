@@ -10,21 +10,16 @@
 </head>
 <body>
     <div>
-        <input type="color" name="color_input" id="color_input" onchange="func1(event)" oninput="func2(event)" >
+        <input type="color" name="color_input" id="color_input"  oninput="func1(event)" ><!--onchange="func1(event)"-->
         <label for="color_input">Pick a color</label>
     </div>
-    <div class="jumbotron invisible">
+    <div class="jumbotron invisible" id="jTron">
             <h1 class="display-4">Hello, client.</h1>
             <p id="total" class="lead"></p>
             <hr class="my-4">
             <p id="this_color_count"></p>
-            <p>This choise id is coise_id.
-                <br>
-                The last color you have picked was: .
-                <br>
-                This color is:
-            </p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            <p id="this_color"></p>
+            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="hide_yo_mama()">Hide this jumbotron</a>
           </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
