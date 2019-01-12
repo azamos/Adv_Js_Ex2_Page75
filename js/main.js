@@ -1,3 +1,4 @@
+const delay=10000;
 const totalCounter=makeCounter("total");//the total amount of colors picked
 const colorsCounters=[];//array to keep tracks of all of the colors that are picked.Each filled cell
 let firstTimeEvent=true;
@@ -47,9 +48,6 @@ function makeCounter(counterId, initialValue = 0) {
     };
   }
 function input_event_handler(e){
-    if(firstTimeEvent==true){
-        setTimeout(function(){firstTimeEvent=false;},16000);
-    }
     totalCounter.increment();
     let color=e.target.value;
     let index=checkIfColorWasPickedBefore(color);//Will keep index of a repeatadly chosen color
@@ -71,7 +69,7 @@ function input_event_handler(e){
     }
     let msg=document.getElementById('jTron');
     if(!msg.classList.contains('invisible')){msg.classList.add('invisible');}
-    setTimeout(printBanner,15000,sentIndex,msg);
+    setTimeout(printBanner,delay,sentIndex,msg);
 }
 function checkIfColorWasPickedBefore(color){
     for(let i=0;i<colorsCounters.length;i++){
@@ -82,6 +80,10 @@ function checkIfColorWasPickedBefore(color){
     return null;//Means we did not pick it before
 }
 function printBanner(index,msg){
+    let timeoutId=null;//for canceling timeout
+    if(firstTimeEvent==true){
+        timeoutId=setTimeout(function(){firstTimeEvent=false;},delay);
+    }
     msg.classList.remove('invisible');
     document.getElementById("total").innerText=`You have picked a color ${totalCounter.getCount()} times!`;
     let color=colorsCounters[index].value;
@@ -91,14 +93,19 @@ function printBanner(index,msg){
     document.getElementById("this_color_count").innerText=`You have picked this specific color ${counter.getCount()} times!`;
     document.getElementById('this_color').innerText=`The color you picked is ${color}`;
     document.getElementById('this_color_visual').style.fill = color;
+    if(totalCounter.getCount()>=2){//Means no nead to wait
+        firstTimeEvent=false;
+        clearTimeout(timeoutId);
+    }
     if(firstTimeEvent==false){
-        if(totalCounter.getCount()==2){
+        if(totalCounter.getCount()==2&&previousColor!=null){
             document.getElementById('prev_id').classList.remove("invisible");
         }
         document.getElementById("prev_color_visual").style.fill = previousColor;
         document.getElementById("prev_color").textContent=`Your previous choise was ${previousColor}`;
     }
     previousColor=color;
+    firstTimeEvent=false;
 }
 function hide(){
     let msg=document.getElementById('jTron');
