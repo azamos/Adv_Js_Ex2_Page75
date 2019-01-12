@@ -1,6 +1,7 @@
 
 const totalCounter=makeCounter("total");//the total amount of colors picked
 const colorsCounters=[];//array to keep tracks of all of the colors that are picked
+const previousColor=null;//At first, there is no previous pick
 //the function below was created by asaf
 function makeCounter(counterId, initialValue = 0) {
     const id = counterId;
