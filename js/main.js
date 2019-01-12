@@ -100,4 +100,3 @@ function hide(){
     let msg=document.getElementById('jTron');
     msg.classList.add('invisible');
 }
-
