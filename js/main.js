@@ -1,5 +1,6 @@
 const totalCounter=makeCounter("total");//the total amount of colors picked
 const colorsCounters=[];//array to keep tracks of all of the colors that are picked.Each filled cell
+let firstTimeEvent=true;
 //contatins an object named colorData, which has 2 properties: color's value, and a counter.
 let previousColor=null;//At first, there is no previous pick
 //the function below was created by asaf blum.No changes were made.
@@ -46,6 +47,9 @@ function makeCounter(counterId, initialValue = 0) {
     };
   }
 function input_event_handler(e){
+    if(firstTimeEvent==true){
+        setTimeout(function(){firstTimeEvent=false;},16000);
+    }
     totalCounter.increment();
     let color=e.target.value;
     let index=checkIfColorWasPickedBefore(color);//Will keep index of a repeatadly chosen color
@@ -67,7 +71,7 @@ function input_event_handler(e){
     }
     let msg=document.getElementById('jTron');
     if(!msg.classList.contains('invisible')){msg.classList.add('invisible');}
-    setTimeout(printBanner,5000,sentIndex,msg);
+    setTimeout(printBanner,15000,sentIndex,msg);
 }
 function checkIfColorWasPickedBefore(color){
     for(let i=0;i<colorsCounters.length;i++){
@@ -87,7 +91,7 @@ function printBanner(index,msg){
     document.getElementById("this_color_count").innerText=`You have picked this specific color ${counter.getCount()} times!`;
     document.getElementById('this_color').innerText=`The color you picked is ${color}`;
     document.getElementById('this_color_visual').style.fill = color;
-    if(totalCounter.getCount()>1){
+    if(firstTimeEvent==false){
         if(totalCounter.getCount()==2){
             document.getElementById('prev_id').classList.remove("invisible");
         }
