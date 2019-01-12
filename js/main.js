@@ -1,7 +1,7 @@
 
 const totalCounter=makeCounter("total");//the total amount of colors picked
 const colorsCounters=[];//array to keep tracks of all of the colors that are picked
-const previousColor=null;//At first, there is no previous pick
+let previousColor=null;//At first, there is no previous pick
 //the function below was created by asaf
 function makeCounter(counterId, initialValue = 0) {
     const id = counterId;
@@ -48,7 +48,6 @@ function makeCounter(counterId, initialValue = 0) {
 function input_event_handler(e){
     totalCounter.increment();
     let color=e.target.value;
-    console.log('this is change '+color+" total counter is: "+totalCounter.getCount());
     let index=checkIfColorWasPickedBefore(color);
     let sentIndex;
     if(index==null){//Means we need to add new color Counter id
@@ -95,6 +94,14 @@ function printBanner(index){
     let string3=`The color you picked is ${colorsCounters[index].value}`;
     document.getElementById('this_color').innerText=string3;
     document.getElementById('this_color_visual').style.fill = colorsCounters[index].value;
+    if(totalCounter.getCount()>1){
+        if(totalCounter.getCount()==2){
+            document.getElementById('prev_id').classList.remove("invisible");
+        }
+        document.getElementById("prev_color_visual").style.fill = previousColor;
+        document.getElementById("prev_color").textContent=`Your previous choise was ${previousColor}`;
+    }
+    previousColor=colorsCounters[index].value;
 }
 function hide(){
     let msg=document.getElementById('jTron');
