@@ -1,8 +1,8 @@
-
 const totalCounter=makeCounter("total");//the total amount of colors picked
-const colorsCounters=[];//array to keep tracks of all of the colors that are picked
+const colorsCounters=[];//array to keep tracks of all of the colors that are picked.Each filled cell
+//contatins an object named colorData, which has 2 properties: color's value, and a counter.
 let previousColor=null;//At first, there is no previous pick
-//the function below was created by asaf
+//the function below was created by asaf blum.No changes were made.
 function makeCounter(counterId, initialValue = 0) {
     const id = counterId;
     let counter = initialValue;
@@ -48,54 +48,45 @@ function makeCounter(counterId, initialValue = 0) {
 function input_event_handler(e){
     totalCounter.increment();
     let color=e.target.value;
-    let index=checkIfColorWasPickedBefore(color);
-    let sentIndex;
-    if(index==null){//Means we need to add new color Counter id
+    let index=checkIfColorWasPickedBefore(color);//Will keep index of a repeatadly chosen color
+    //,or NULL if said color was not picked before.
+    let sentIndex;//Will be sent to the printing function
+    if(index==null){//Means we need to add new color
         //to colorsCounter
-        let colorData={value: color, counter: makeCounter('color')};
-        Object.defineProperty(colorData,'value',{
-            //value: color,
+        let colorData={value: color, counter: makeCounter('color')};//Is beign kept inside colorsCounters
+        Object.defineProperty(colorData,'value',{//prevents accidental changes to the value
             writable:false
         })
-        
-        //TODO: make value non configurable and non writable.Note: I think I dit it
         colorData.counter.increment();
         colorsCounters.push(colorData);
-        sentIndex=colorsCounters.length-1;
+        sentIndex=colorsCounters.length-1;//New color pushed to new and last cell of colorsCounters.
     }
-    else{
-        console.log('was picked before');
+    else{//Means color was chosen before. need to update it's counter and pass on it's index in colorsCounters
         colorsCounters[index].counter.increment();
         sentIndex=index;
     }
     let msg=document.getElementById('jTron');
     if(!msg.classList.contains('invisible')){msg.classList.add('invisible');}
-    setTimeout(printBanner,5000,sentIndex);
+    setTimeout(printBanner,5000,sentIndex,msg);
 }
 function checkIfColorWasPickedBefore(color){
     for(let i=0;i<colorsCounters.length;i++){
         if(colorsCounters[i].value==color){
-            console.log('got here');
             return i;
         }
     }
     return null;//Means we did not pick it before
 }
-function printBanner(index){
-    let msg=document.querySelector('.invisible');
-    if(msg!=null){
-        msg.classList.remove('invisible');
-    }
-    let string=`You have picked a color ${totalCounter.getCount()} times!`;
-    document.getElementById("total").innerText=string;
+function printBanner(index,msg){
+    msg.classList.remove('invisible');
+    document.getElementById("total").innerText=`You have picked a color ${totalCounter.getCount()} times!`;
     let color=colorsCounters[index].value;
-    let id=color+'_'+colorsCounters[index].counter.getCount();
+    let counter=colorsCounters[index].counter;
+    let id=color+`_${counter.getCount()}`;
     document.getElementById('this_id').innerText=`this choise's id is: ${id}`;
-    let string2=`You have picked this specific color ${colorsCounters[index].counter.getCount()} times!`;
-    document.getElementById("this_color_count").innerText=string2;
-    let string3=`The color you picked is ${colorsCounters[index].value}`;
-    document.getElementById('this_color').innerText=string3;
-    document.getElementById('this_color_visual').style.fill = colorsCounters[index].value;
+    document.getElementById("this_color_count").innerText=`You have picked this specific color ${counter.getCount()} times!`;
+    document.getElementById('this_color').innerText=`The color you picked is ${color}`;
+    document.getElementById('this_color_visual').style.fill = color;
     if(totalCounter.getCount()>1){
         if(totalCounter.getCount()==2){
             document.getElementById('prev_id').classList.remove("invisible");
@@ -103,7 +94,7 @@ function printBanner(index){
         document.getElementById("prev_color_visual").style.fill = previousColor;
         document.getElementById("prev_color").textContent=`Your previous choise was ${previousColor}`;
     }
-    previousColor=colorsCounters[index].value;
+    previousColor=color;
 }
 function hide(){
     let msg=document.getElementById('jTron');
