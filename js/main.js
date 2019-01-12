@@ -1,4 +1,4 @@
-const delay=10000;
+const delay=5000;
 const totalCounter=makeCounter("total");//the total amount of colors picked
 const colorsCounters=[];//array to keep tracks of all of the colors that are picked.Each filled cell
 let firstTimeEvent=true;
@@ -80,10 +80,6 @@ function checkIfColorWasPickedBefore(color){
     return null;//Means we did not pick it before
 }
 function printBanner(index,msg){
-    let timeoutId=null;//for canceling timeout
-    if(firstTimeEvent==true){
-        timeoutId=setTimeout(function(){firstTimeEvent=false;},delay);
-    }
     msg.classList.remove('invisible');
     document.getElementById("total").innerText=`You have picked a color ${totalCounter.getCount()} times!`;
     let color=colorsCounters[index].value;
@@ -93,16 +89,10 @@ function printBanner(index,msg){
     document.getElementById("this_color_count").innerText=`You have picked this specific color ${counter.getCount()} times!`;
     document.getElementById('this_color').innerText=`The color you picked is ${color}`;
     document.getElementById('this_color_visual').style.fill = color;
-    if(totalCounter.getCount()>=2){//Means no nead to wait
-        firstTimeEvent=false;
-        clearTimeout(timeoutId);
-    }
-    if(firstTimeEvent==false){
-        if(totalCounter.getCount()==2&&previousColor!=null){
-            document.getElementById('prev_id').classList.remove("invisible");
-        }
+    if(firstTimeEvent==false&&previousColor!=null&&totalCounter.getCount()>=2){
         document.getElementById("prev_color_visual").style.fill = previousColor;
         document.getElementById("prev_color").textContent=`Your previous choise was ${previousColor}`;
+        document.getElementById('prev_id').classList.remove("invisible");
     }
     previousColor=color;
     firstTimeEvent=false;
