@@ -47,7 +47,7 @@ function makeCounter(counterId, initialValue = 0) {
 function input_event_handler(e){
     totalCounter.increment();
     let color=e.target.value;
-    console.log('this is change'+color+" total counter is: "+totalCounter.getCount());
+    console.log('this is change '+color+" total counter is: "+totalCounter.getCount());
     let index=checkIfColorWasPickedBefore(color);
     let sentIndex;
     if(index==null){//Means we need to add new color Counter id
