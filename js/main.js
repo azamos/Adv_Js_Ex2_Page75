@@ -64,6 +64,7 @@ function input_event_handler(e){
         sentIndex=colorsCounters.length-1;
     }
     else{
+        console.log('was picked before');
         colorsCounters[index].counter.increment();
         sentIndex=index;
     }
@@ -74,10 +75,11 @@ function input_event_handler(e){
 function checkIfColorWasPickedBefore(color){
     for(let i=0;i<colorsCounters.length;i++){
         if(colorsCounters[i].value==color){
+            console.log('got here');
             return i;
         }
-        return null;//Means we did not pick it before
     }
+    return null;//Means we did not pick it before
 }
 function printBanner(index){
     let msg=document.querySelector('.invisible');
