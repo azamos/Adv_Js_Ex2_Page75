@@ -17,22 +17,17 @@
     function input_event_handler(e){
         totalCounter.increment();
         let color=e.target.value;
-        check(color);
-        colorsCounters[color].increment();
+        checkAndRetPropRef(color).increment();
         if(!msg.classList.contains('invisible')){
             msg.classList.add('invisible');
         }
         setTimeout(printBanner,delay,color);
     }
-    function check(color){
-        //let colors=Object.getOwnPropertyNames(colorsCounters);
-        for(p in colorsCounters){
-            if(p==color){
-                console.log(p);
-                return;
-            }
+    function checkAndRetPropRef(color){//checks if color was picked before. if not, creates a property for it inside colorsCounters. returns ref to property.
+        if(!(color in colorsCounters)){
+            colorsCounters[color] =makeCounter(`${color}`);
         }
-        colorsCounters[color]=makeCounter(`${color}`);
+        return colorsCounters[color];
     }
     function printBanner(color){
         msg.classList.remove('invisible');
