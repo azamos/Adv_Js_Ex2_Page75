@@ -13,36 +13,28 @@
     const prevColorVis=document.getElementById("prev_color_visual");
     const prevCol=document.getElementById("prev_color");
     const prevId=document.getElementById('prev_id');
-    let color;
-    const event=new Event('incCounter');
-    document.addEventListener('incCounter',logic,false);
     function input_event_handler(e){
-        color=e.target.value;
-        console.log(`before: ${totalCounter.getCount()}`);
+        let color=e.target.value;
         totalCounter.increment();
-        console.log(`after: ${totalCounter.getCount()}`);
-        document.dispatchEvent(event);
-    }
-    function logic(){
-        console.log(`Event dispatched for the ${totalCounter.getCount()} time`);
-        checkAndRetPropRef().increment();
+        checkAndRetPropRef(color).increment();
         if(firstTimeEvent==false){
-            updateFields();
+            updateFields(color);
         }
         else{
             setTimeout(function(){
-                updateFields();
+                updateFields(color);
                 msg.classList.remove('invisible');
-            },delay,);
+                firstTimeEvent=false;
+            },delay);
         }
     }
-    function checkAndRetPropRef(){//checks if color was picked before. if not, creates a property for it inside colorsCounters. returns ref to property.
+    function checkAndRetPropRef(color){//checks if color was picked before. if not, creates a property for it inside colorsCounters. returns ref to property.
         if(!(color in colorsCounters)){
             colorsCounters[color] =makeCounter(`${color}`);
         }
         return colorsCounters[color];
     }
-    function updateFields(){
+    function updateFields(color){
         totalRef.innerText=`You have picked a color ${totalCounter.getCount()} times!`;
         let counter=colorsCounters[color].getCount();
         let id=color+`_${counter}`;
