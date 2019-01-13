@@ -13,24 +13,36 @@
     const prevColorVis=document.getElementById("prev_color_visual");
     const prevCol=document.getElementById("prev_color");
     const prevId=document.getElementById('prev_id');
-
+    let color;
+    const event=new Event('incCounter');
+    document.addEventListener('incCounter',logic,false);
     function input_event_handler(e){
+        color=e.target.value;
+        console.log(`before: ${totalCounter.getCount()}`);
         totalCounter.increment();
-        let color=e.target.value;
-        checkAndRetPropRef(color).increment();
-        if(!msg.classList.contains('invisible')){
-            msg.classList.add('invisible');
-        }
-        setTimeout(printBanner,delay,color);
+        console.log(`after: ${totalCounter.getCount()}`);
+        document.dispatchEvent(event);
     }
-    function checkAndRetPropRef(color){//checks if color was picked before. if not, creates a property for it inside colorsCounters. returns ref to property.
+    function logic(){
+        console.log(`Event dispatched for the ${totalCounter.getCount()} time`);
+        checkAndRetPropRef().increment();
+        if(firstTimeEvent==false){
+            updateFields();
+        }
+        else{
+            setTimeout(function(){
+                updateFields();
+                msg.classList.remove('invisible');
+            },delay,);
+        }
+    }
+    function checkAndRetPropRef(){//checks if color was picked before. if not, creates a property for it inside colorsCounters. returns ref to property.
         if(!(color in colorsCounters)){
             colorsCounters[color] =makeCounter(`${color}`);
         }
         return colorsCounters[color];
     }
-    function printBanner(color){
-        msg.classList.remove('invisible');
+    function updateFields(){
         totalRef.innerText=`You have picked a color ${totalCounter.getCount()} times!`;
         let counter=colorsCounters[color].getCount();
         let id=color+`_${counter}`;
@@ -44,7 +56,6 @@
             prevId.classList.remove("invisible");
         }
         previousColor=color;
-        firstTimeEvent=false;
     }
     function hide(){
         msg.classList.add('invisible');
